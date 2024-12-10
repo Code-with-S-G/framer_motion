@@ -1,5 +1,5 @@
 import { useContext, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
+import {  motion, stagger, useAnimate } from 'framer-motion';
 
 import { ChallengesContext } from '../store/challenges-context.jsx';
 import Modal from './Modal.jsx';
@@ -10,8 +10,12 @@ export default function NewChallenge({ onDone }) {
   const description = useRef();
   const deadline = useRef();
 
+  const [scope, animate] = useAnimate(); // to handle element animations imperatively
+
+
   const [selectedImage, setSelectedImage] = useState(null);
   const { addChallenge } = useContext(ChallengesContext);
+  const [errorMessages, setErrorMessages] = useState("");
 
   function handleSelectImage(image) {
     setSelectedImage(image);
@@ -32,6 +36,13 @@ export default function NewChallenge({ onDone }) {
       !challenge.deadline.trim() ||
       !challenge.image
     ) {
+      setErrorMessages("error");
+      animate (
+        'input, textarea, .error',
+        { x: [-10, 0, 10 , 0], borderColor: "red", color: "red"},
+        { type: 'spring', duration: 0.2, delay: stagger(0.05)}
+      )
+      // first parameter is the list of tags u want to animate, u can use classname instead, 2nd is like the animate prop, third is like the transition prop
       return;
     }
 
@@ -41,11 +52,14 @@ export default function NewChallenge({ onDone }) {
 
   return (
     <Modal title="New Challenge" onClose={onDone}>
-      <form id="new-challenge" onSubmit={handleSubmit}> 
+      <form id="new-challenge" onSubmit={handleSubmit} ref={scope}> 
         <p>
-          <label htmlFor="title">Title</label>
+          <label htmlFor="title" className='error'>Title</label>
           <input ref={title} type="text" name="title" id="title" />
+          {errorMessages && <p className='error'>{errorMessages}</p>}
+          {/* here we wanted to animate the p tag using framer motion , using the animate function */}
         </p>
+        
 
         <p>
           <label htmlFor="description">Description</label>
