@@ -28,7 +28,8 @@ export default function ChallengeItem({
   }
 
   return (
-    <li>
+    <motion.li layout exit={{ y: -30, opacity: 0 }}> 
+    {/* layout here helps to add animation to the list items when one item is disappeared the below item moves upward by animation. But if the last item is removed no animation can be seen */}
       <article className="challenge-item">
         <header>
           <img {...challenge.image} />
@@ -61,6 +62,6 @@ export default function ChallengeItem({
           )}
         </div>
       </article>
-    </li>
+    </motion.li>
   );
 }

@@ -12,7 +12,7 @@ export default function Modal({ title, children, onClose }) {
       }}
       initial="hidden" // for initial animation when the component mounts
       animate="visible"
-      exit="hidden" // animate when disappears or when the component unmounts
+      // exit="hidden" // animate when disappears or when the component unmounts
        open className="modal">
         <h2>{title}</h2>
         {children}

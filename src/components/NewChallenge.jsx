@@ -80,7 +80,7 @@ export default function NewChallenge({ onDone }) {
                 hidden: {opacity: 0, scale: 0.5},
                 visible: {opacity: 1, scale: [0.8, 1.3, 1]}, //adding keyframes to the image so that they can first appear on the screen at 80% then 130% and finally on 100%
               }} // inherits the parent prop where we have used hidden and visible for ex: here the parent component is modal and the hidden and visible variants are set to initial, exit and animate so here also in this li it will be set to initial exit and animate.
-              exit={{opacity: 1, scale: 1}} //overwrites the parent prop
+              // exit={{opacity: 1, scale: 1}} //overwrites the parent prop
               transition={{type: 'spring'}}
               key={image.alt}
               onClick={() => handleSelectImage(image)}
